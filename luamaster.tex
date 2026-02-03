@@ -1,0 +1,87 @@
+%TeX program = lualatex
+
+% chktex-file 2          Don't suggest (a+b)^2 --> {(a+b)}^2
+% chktex-file 3          Don't suggest (a+b)^2 --> {(a+b)}^2
+\documentclass{report}
+\usepackage[margin=0.95in]{geometry}
+
+\usepackage{polyglossia} % Like babel (not bibtex) for lualatex (e.g. Table -> Tabla)
+    \setdefaultlanguage[variant=mexican]{spanish}
+\usepackage[hypertexnames=false]{hyperref}
+
+% Surround Verbatim environments in comment environments to stop chktex
+\usepackage{fancyvrb}
+\newenvironment{comment}{}{}
+
+
+% Math
+\usepackage[def-file=diferenciales]{diffcoeff}      % Derivatives
+\usepackage{tensor}                                 % Tensors
+\usepackage{dsfont}                                 % \mathds{1}
+\usepackage[math-style=TeX]{unicode-math}           % Must be loaded AFTER any other math pkg
+
+\newcommand{\vect}[1]{\mathbfit{\overrightarrow{#1}}}
+\newcommand{\hatvect}[1]{\mathbfit{\hat{#1}}}
+\newcommand{\norma}[1]{\lvert\lvert#1\rvert\rvert}
+
+% Annotations
+\usepackage{cancel}                                 % \cancel{}
+\usepackage{annotate-equations}                     % Tikz Annotations
+
+
+% Figure support
+\usepackage{import}
+\usepackage{xifthen}
+\pdfminorversion=7
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{float} % For the [H] option on images
+
+% Inkscape-figures
+\newcommand{\incfig}[2][1]{%
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/exports/}{#2.pdf_tex}
+}
+
+% luadraw
+\usepackage[svgnames]{xcolor}
+\usepackage[3d,cachedir=figures/_luadraw]{luadraw}
+
+% https://tex.stackexchange.com/questions/285950/
+\expandafter\def\csname ver@etex.sty\endcsname{3000/12/31}
+\let\globcount\newcount%
+\usepackage{autonum}
+\undef\ifempty%
+
+\title{Notas de electro del Dr.\ Miller}
+\author{%
+    Fabrice Bernès Carmona
+    \\
+    Brian Barranco Uscanga
+    \\
+    \vspace{0.5cm}
+    \normalsize{Facultad de Ciencias Físico-Matemáticas}
+    \\
+    \normalsize{Maestría en Física Aplicada, BUAP}
+}
+
+\begin{document}
+% <<< Primeras páginas
+    \maketitle
+
+    % https://tex.stackexchange.com/questions/26521/
+    \setlength{\abovedisplayskip}{1.5em plus 1.0pt minus 2.0pt}
+    \setlength{\belowdisplayskip}{1.5em plus 1.0pt minus 2.0pt}
+
+    \chapter*{Resumen o algo}
+    \thispagestyle{empty}
+Aquí iría un resumen o algo.
+    \clearpage
+% >>>
+% \input{clase_1}
+% \input{clase_2}
+% \input{clase_3}
+% \appendix
+% \input{problemas_resueltos}
+
+\end{document}

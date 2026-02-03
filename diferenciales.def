@@ -1,0 +1,133 @@
+% local
+\difdef{ l }{ short }{ style=d^ }
+
+% return
+\newcommand \ds[1]{
+    \difl.short.{#1}
+}
+
+%%% %%%
+
+% local
+\difdef {f, s, l}{ var }{
+    op-symbol = \delta,
+    long-var-wrap = (dv),
+}
+
+% return
+\NewDocumentCommand{\var}{som}{          % star optional mandatory
+    \delta
+    \IfNoValueTF{#2}                           % No optional #2 was given
+    {
+        \IfBooleanTF#1{ \left(#3\right) }{ #3 }             % Star was given
+    }
+    {
+        \tensor{
+            \IfBooleanTF#1{ \left(#3\right) }{ #3 }             % Star was given
+        }{#2}
+    }
+}
+
+% return
+\NewDocumentCommand{\covar}{som}{
+    \IfNoValueTF{#2}                           % No optional #2 was given
+    {
+        \nabla
+        \IfBooleanTF#1{ \left(#3\right) }{ #3 }              % Star was given
+    }
+    {
+        \tensor{\nabla}{#2}
+        \IfBooleanTF#1{ \left(#3\right) }{ #3 }              % Star was given
+    }
+}
+
+% return
+\NewDocumentCommand{\parcial}{som}{
+    \IfNoValueTF{#2}                           % No optional #2 was given
+    {
+        \partial
+        \IfBooleanTF#1{ \left(#3\right) }{ #3 }              % Star was given
+    }
+    {
+        \tensor{\partial}{#2}
+        \IfBooleanTF#1{ \left(#3\right) }{ #3 }              % Star was given
+    }
+}
+
+%%% %%%
+
+% \pg{\mu\nu}{f}                parcial de f, respecto de g^{\mu\nu}
+% \ppg{\alpha}{\mu\nu}{f}       parcial de f, respecto de \partial_\alpha g^{\mu\nu}
+
+% return
+\NewDocumentCommand{\pmet}{somm}{          % star optional mandatory mandatory
+    \IfNoValueTF{#2}                           % No optional #2 was given
+    {
+        \IfBooleanTF#1                         % Star was given
+        {
+            \diffp**{g^{#3}}{#4}
+        }
+        {
+            \diffp{#4}{g^{#3}}
+        }
+    }
+    {
+        \IfBooleanTF#1                         % Star was given
+        {
+            \diffp**{ (\difcp{g^{#3}}{#2}) }{#4}
+        }
+        {
+            \diffp{#4}{ (\difcp{g^{#3}}{#2}) }
+        }
+    }
+}
+
+% return
+\NewDocumentCommand{\pscal}{som}{          % star optional mandatory
+    \IfNoValueTF{#2}                         % No optional #2 was given
+    {
+        \IfBooleanTF#1                       % Star was given
+        {
+            \diffp**{\phi}{#3}
+        }
+        {
+            \diffp{#3}{\phi}
+        }
+    }
+    {
+        \IfBooleanTF#1                       % Star was given
+        {
+            \diffp**{
+                (\difcp{\phi}{#2})
+            }{#3}
+        }
+        {
+            \diffp{#3}{
+                (\difcp{\phi}{#2})
+            }
+        }
+    }
+}
+
+%%% %%%
+
+
+%\ds{x}^4                               Diferencial cuarta de x
+%\var{f}                                Variación de f
+%\var*{f}                               Variación de f con paréntesis
+%\var[_\alpha_\beta]{f}                 Variación de f, con subíndices alpha y beta
+%\var*[_\alpha_\beta]{f}                Variación de f entre paréntesis, con subíndices alpha y beta
+
+%\pmet{\mu \nu}{f}                      Parcial de f, respecto de g^{\mu \nu}
+%\pmet*{\mu \nu}{f}                     Parcial de f, respecto de g^{\mu \nu}, f abajo
+
+%\pmet[\rho]{\mu \nu}{f}                Parcial de f, respecto de (\partial_\rho g^{\mu \nu})
+%\pmet[\rho,\sigma]{\mu \nu}{f}         Parcial de f, respecto de (\partial_\rho \partial_\sigma g^{\mu \nu})
+%\pmet*[\rho,\sigma]{\mu \nu}{f}        Parcial de f, respecto de (\partial_\rho \partial_\sigma g^{\mu \nu}), f abajo
+
+%\pscal{f}                              Parcial de f, respecto de \phi
+%\pscal*{f}                             Parcial de f, respecto de \phi, f abajo
+%\pscal[\rho]{f}                        Parcial de f, respecto de (\partial_\rho \phi)
+
+%\covar[_\rho]{f}                       Derivada covariante, con subíndice rho, de f
+%\covar*[^\rho]{f}                      Derivada covariante, con superíndice rho, de f entre paréntesis
