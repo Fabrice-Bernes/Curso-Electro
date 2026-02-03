@@ -1,0 +1,10 @@
+{
+  "runtime.version": "LuaJIT",
+  "completion.enable": true,
+  "workspace.library": [
+      "~/texmf/tex/lualatex/luadraw/",
+      "~/texmf/tex/lualatex/luadraw/extensions/"
+  ],
+  "diagnostics.globals": [ "graph", "graph3d" ]
+}
+
