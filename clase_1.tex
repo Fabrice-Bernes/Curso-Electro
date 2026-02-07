@@ -3,7 +3,7 @@
 % chktex-file 2          Don't suggest (a+b)^2 --> {(a+b)}^2
 % chktex-file 3          Don't suggest (a+b)^2 --> {(a+b)}^2
 \chapter{Clase 1}
-\section{Fuerza eléctrica y campo eléctrico}
+\section{Fuerza eléctrica y desplazamiento eléctrico}
 La fuerza eléctrica sobre $q_1$, producida por $q_2$, es:
 \begin{equation}
     \vect{F}_{2 \rightarrow 1} =
@@ -51,7 +51,7 @@ eléctrica en presencia de un campo externo:
     \hfill
     \begin{minipage}[c]{0.40\textwidth}
         \caption{
-            Carga en un campo eléctrico de la forma
+            Carga en un campo $\vect{E}$ de la forma
             $\vect{E}(\vect{r}) = 0\hatvect{i} + E\hatvect{j} + 0\hatvect{k}$
         }%
     \end{minipage}
@@ -59,8 +59,8 @@ eléctrica en presencia de un campo externo:
 
 \vspace{1em}\hrule\vspace{1em}
 
-El campo eléctrico que genera una carga eléctrica, se escribe como:
-\begin{equation}\label{eq:campo electrico}
+El campo que genera una carga eléctrica, se escribe como:
+\begin{equation}\label{campo_E}
     \vect{E}(\vect{r}) =
     k \, q_1
     \frac{\vect{r} - \vect{r}_1}{ \norma{ \vect{r} - \vect{r}_1 }^3 }
@@ -68,7 +68,7 @@ El campo eléctrico que genera una carga eléctrica, se escribe como:
 
 Si se tienen muchas cargas puntuales, aplica el principio de superposición.
 Esto es, el campo total es igual a la suma de los campos que cada partícula
-produce individualmente, según \eqref{eq:campo electrico}:
+produce individualmente, según \eqref{campo_E}:
 \begin{equation}
     \vect{E}(\vect{r}) =
     k \sum_{i=1}^N
@@ -104,9 +104,9 @@ Y en el límite $N\rightarrow\infty \quad q_i \rightarrow 0$:
 \section{La Ley de Gauss}
 El teorema de la divergencia es:
 \begin{equation}\label{eq:teorema_de_la_divergencia}
-    \oint_S \vect{A} \cdot \hatvect{n} \ds{s}^2
+    \oint_S \vect{A} \cdot \hatvect{n} \ds{s}
     =
-    \int_V \nabla \cdot \vect{A} \ds{v}^3
+    \int_V \nabla \cdot \vect{A} \ds{v}
 \end{equation}
 
 Donde $\vect{A}$ es un campo vectorial definido en el volumen $V$, y
