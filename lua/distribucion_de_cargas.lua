@@ -1,6 +1,5 @@
 require('lua.3d_octante')
-require('luadraw_spherical')
-arrowBstyle = '-stealth, gray'
+local patata, _ = read_obj_file('lua/patata.obj')
 
 -- local k,alpha = 0.5, 45
 local g = graph3d:new {
@@ -15,41 +14,9 @@ g:Linejoin('round'); g:Linewidth(6)
 
 g:Doctante(4.5 ,3 ,3)
 
-g:Define_sphere(
-    {
-        center = M(-1,-1.5,2.5),
-        radius = 0.8,
-        color = 'gray',
-        opacity = 0.1,
-        -- mode = mGrid,
-        mode = mWireframe,
-        edgecolor = 'black',
-        edgewidth = 1,
-        hiddenstyle = 'solid'
-    }
-)
-
 local r_prima = M(-1,-1.8,2.5)
 local r_campo = M(-1,2,1)
 local valor_campo = 0.6*vecK + 0.2*vecJ
-
-g:DSpolyline(
-    { {Origin, r_prima}, },
-    { hidden = true, arrows = 1 }
-)
-
-g:DSpolyline(
-    { {r_prima, r_campo} },
-    { hidden = true, color = 'gray', arrows = 1 }
-)
-
--- Elemento de volumen
-g:DSpolyline(
-    facetedges( parallelep( r_prima, -0.1*vecI, -0.1*vecJ, 0.1*vecK ) ),
-    {width = 3, hidden=false}
-)
-
-g:Dspherical()
 
 g:Dpolyline3d(
     {
@@ -59,6 +26,36 @@ g:Dpolyline3d(
     false,
     '-stealth'
 )
+
+g:Dscene3d(
+    g:addPolyline(
+        {Origin, r_prima},
+        { hidden=true, hiddenstyle='dashed', arrows=1 }
+    ),
+    g:addPolyline(
+        {r_prima, r_campo},
+        { hidden=true, color = 'gray', hiddenstyle='dashed', arrows=1 }
+    ),
+    g:addPoly(
+        ftransform3d(
+            scale3d(patata, 10, Origin),
+            function(point)
+                return M(point.x - 1, point.y - 1.8, point.z + 2.9)
+            end
+        ),
+        {
+            mode     = mShadedOnly,
+            contrast = 0.5,
+            opacity  = 1
+        }
+    )
+)
+
+-- Elemento de volumen
+g:Dpolyline3d(
+    facetedges( parallelep( r_prima, -0.1*vecI, -0.1*vecJ, 0.1*vecK ) )
+)
+
 
 g:Dlabel3d(
     "$\\vect{r}'$", r_prima / 2, {pos='W'},
