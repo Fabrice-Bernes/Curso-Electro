@@ -13,6 +13,8 @@
 \usepackage{fancyvrb}
 \newenvironment{comment}{}{}
 
+% https://tex.stackexchange.com/a/67914
+\newcommand{\negphantom}[1]{\settowidth{\dimen0}{#1}\hspace*{-\dimen0}}
 
 % Math
 \usepackage[def-file=diferenciales]{diffcoeff}      % Derivatives

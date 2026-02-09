@@ -406,4 +406,135 @@ es conservativa, como se esperaba de $\nabla \times \vect{E} = 0$:
 Donde $C$ $S$ son la trayectoria cerrada, y la superficie delimitada por dicha
 trayectoria, respectivamente. Ver figura. %TODO FIGURA
 
+\section{
+    Distribuciones superficiales de carga y las
+    discontinuidades de \texorpdfstring{$\vect{E}$}{E}
+}
+Dada una distribución superficial de carga, con densidad $\sigma(\vect{r})$,
+entonces la divergencia del campo que ésta produce, satisface
+$\nabla \cdot \vect{E} = 4\pi k \sigma(\vect{r})$,
+que en forma integral, es, de acuerdo con \eqref{eq:ley_de_gauss_casos}:
+\begin{equation}\label{eq:gauss_cilindro}
+    \int_V \Bigl( \nabla \cdot \vect{E} \Bigr) \ds{v}^3
+    = 4\pi \int_S \sigma(\vect{r}) \ds{s}^2
 \end{equation}
+
+Donde $V$ es un volumen que contiene por completo
+a la distribución de cargas, y $S$ su superficie.
+En la figura %TODO figura
+se muestra la superficie que delimita
+a un cilindro de altura $h$, que cumple las características de $V$.
+
+Por otro lado, si se aplica el teorema de la divergencia
+\eqref{eq:teorema_de_la_divergencia} y se procede por evaluación directa,
+en el límite $h \rightarrow 0$:
+\vspace{1em}
+\begin{equation}
+    \int_V \left( \nabla \cdot \vect{E} \right) \ds{v}
+    % = \oint \vect{E} \cdot \hatvect{n} \ds{a}
+    = \oint \vect{E} \cdot \ds{\vect{a}}
+    = \int_\text{Tapa 1}
+      \negphantom{\text{Tapa}}
+      % \left( \vect{E}(\vect{r}_1) \cdot \hatvect{n}_1 \right) \ds{s_1}
+      \vect{E}(\vect{r}_1) \cdot \ds{\vect{s}_1}
+    + \int_\text{Tapa 2}
+      \negphantom{\text{Tapa}}
+      % \left( \vect{E}(\vect{r}_2) \cdot \hatvect{n}_2 \right) \ds{s_2}
+       \vect{E}(\vect{r}_2) \cdot \ds{\vect{s}_2}
+    + \int_\text{Pared}
+      \negphantom{\text{Par}}
+      % \left( \vect{E}(\vect{r}_3) \cdot \hatvect{n}_3(\hatvect{\rho}) \right)
+      % \ds{s_3}
+      \left(
+        \vect{E}(\vect{r}_3)
+        \cdot
+        \eqnmarkbox[gray]{n1}{\hatvect{\rho}} % annotation
+      \right)
+      \eqnmarkbox[gray]{n2}{\ds{s_3}} % annotation
+\end{equation}
+\annotate[yshift=1em]{above,left}{n1,n2}{
+    $\ds{\vect{s}_3} = \hatvect{n}_3 \ds{s_3} = \vect{\rho} \ds{s_3}$
+}
+
+En el límite $h \rightarrow 0$, el flujo de $\vect{E}$ sobre la
+pared del cilindro desaparece:
+\begin{equation}\label{eq:flujo_limite}
+    \biggl[
+        \int_V \left( \nabla \cdot \vect{E} \right) \ds{v}
+    \biggr]_{ h \rightarrow 0 }
+    = \int_\text{Tapa 1}
+      \negphantom{\text{Tapa}}
+      % \left( \vect{E}(\vect{r}_1) \cdot \hatvect{n}_1 \right) \ds{s_1}
+      \vect{E}(\vect{r}_1) \cdot \ds{\vect{s}_1}
+    + \int_\text{Tapa 2}
+      \negphantom{\text{Tapa}}
+      % \left( \vect{E}(\vect{r}_2) \cdot \hatvect{n}_2 \right) \ds{s_2}
+      \vect{E}(\vect{r}_2) \cdot \ds{\vect{s}_2}
+\end{equation}
+
+Además, la única diferencia entre las tapas
+del cilindro, es que sus normales son opuestas, y por lo tanto:
+\vspace{1em}
+\begin{equation}
+    \ds{\vect{s}_1}
+    = \hatvect{n}_1 \ds{s_1}
+    = \eqnmarkbox[gray]{n1}{\hatvect{n}_1} % annotation
+      \,
+      \eqnmarkbox[gray]{d1}{\rho \ds{\rho} \ds{ \varphi }} % annotation
+    = \eqnmarkbox[gray]{n2}{- \hatvect{n}_2} % annotation
+      \rho \ds{\rho} \ds{ \phi }
+    = - \hatvect{n}_2 \ds{s_2}
+    = - \ds{\vect{s}_{2}}
+\end{equation}
+\annotate[yshift=1em]{above,left}{n1,n2}{
+    $\hatvect{n}_1 = - \hatvect{n}_2 \equiv - \hatvect{n}$
+}
+\annotate[yshift=-0.5em]{below,right}{d1}{
+    $\ds{s_1} = \rho \ds{\rho} \ds{\phi} = \ds{s_2} \equiv \ds{s}$
+}
+
+Entonces \eqref{eq:flujo_limite} es:
+\begin{equation}\label{eq:flujo_limite_2}
+    \biggl[
+        \int_V \left( \nabla \cdot \vect{E} \right) \ds{v}
+    \biggr]_{ h \rightarrow 0 }
+    = \int_S
+      \left(
+          \vect{E}_1 \cdot \hatvect{n}_1
+        + \vect{E}_2 \cdot \hatvect{n}_2
+      \right) \ds{s}
+    = \int_S
+      \left(
+          \vect{E}_1 \cdot \hatvect{n}
+        - \vect{E}_2 \cdot \hatvect{n}
+      \right) \ds{s}
+\end{equation}
+%
+donde $\vect{E}_1$ y $\vect{E}_2$ son los valores del campo
+\textit{justo por debajo} y \textit{justo por encima} del plano que contiene
+a la distribución de carga superficial, respectivamente.
+
+Luego, comparando \eqref{eq:flujo_limite_2} con \eqref{eq:gauss_cilindro},
+la cual es válida para el cilindro de altura límite que se está considerando,
+se obtiene la relación entre las componentes perpendiculares a la distribución
+de carga:
+\begin{equation}
+    \int_S
+      \left(
+            \eqnmarkbox[gray]{n1}{\vect{E}_{1\perp}} % annotation
+          - \eqnmarkbox[gray]{n2}{\vect{E}_{2\perp}} % annotation
+      \right) \ds{s}
+    = \int_S 4\pi \sigma \ds{s}
+    \implies
+    \vect{E}_{1\perp} - \vect{E}_{2\perp} = 4\pi \sigma
+    \implies
+    \vect{E}_{1\perp} = \vect{E}_{2\perp} + 4\pi \sigma
+\end{equation}
+\annotate[yshift=-0.5em]{below,left}{n1}{$\vect{E}_1 \cdot \hatvect{n}$}
+\annotate[yshift=-0.5em]{below,left}{n2}{$\vect{E}_2 \cdot \hatvect{n}$}
+
+Para comparar las componentes tangenciales del campo, se puede construir
+una superficie que atraviese al plano sobre el que se define a $\sigma$
+(ver figura), %TODO figura
+y usar y el teorema de Stokes para la evaluar la integral de
+$\nabla \times \vect{E}$ como una integral de línea:
