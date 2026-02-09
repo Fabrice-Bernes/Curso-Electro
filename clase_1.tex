@@ -36,7 +36,7 @@ La fuerza eléctrica sobre $q_1$, producida por $q_2$, es:
 
 Otro escenario posible, es el de una carga puntual que experimenta una fuerza
 eléctrica en presencia de un campo externo:
-\begin{equation}
+\begin{equation}\label{eq:F=qE}
     \vect{F}(\vect{r}) = q \vect{E}(\vect{r})
 \end{equation}
 
@@ -114,29 +114,135 @@ $S$ es la superficie que delimita a $V$. Los vectores $\hatvect{n}$ son
 las normales a cada punto en $S$, y la integral sobre $S$ se denomina
 \textit{flujo de $\vect{A}$ a través de $S$}.
 
-Con el teorema de la divergencia, la ecuación
-$\nabla \cdot \vect{E} = 4 \pi k \rho$ se puede expresar en forma
-integral:
-
-\begin{equation}\label{eq:Ley_de_gauss}
+La ecuación $\nabla \cdot \vect{E} = 4 \pi k \rho$,
+o en forma integral,
+$
     \int_S \vect{E} \cdot \hatvect{n} \ds{s} =
     \int_V \nabla \cdot \vect{E} \ds{v} =
-    4\pi \int_V \rho(\vect{r}) \ds{\vect{r}}^3
-    = 4\pi Q_V
+    4\pi k \int_V \rho(\vect{r}) \ds{\vect{r}}^3
+    = 4\pi k Q_V
+$,
+es consecuencia de \eqref{eq:teorema_de_la_divergencia}.
+%
+Para probar esto, se puede sustituir
+la definición \eqref{eq:campo_distr_continua} en
+\eqref{eq:teorema_de_la_divergencia}, con $\vect{A} = \vect{E}$:
+\begin{equation}\label{eq:ley_de_gauss_int}
+    \int_S \eqnmarkbox[gray]{n1}{\ds{\vect{r}}^2} % annotation
+      (\vect{E} \cdot \eqnmarkbox[gray]{n4}{\hatvect{n}}) % annotation
+    = k\int_S \ds{\vect{r}}^2
+      \Biggl(
+            \int_V \eqnmarkbox[gray]{n2}{\ds{\vect{r}'}^3} % annotation
+            \Bigl(
+              \rho(\vect{r}')
+              \frac{\vect{r} - \vect{r}'}{ \norma{ \vect{r} - \vect{r}' }^3 }
+              \cdot \eqnmarkbox[gray]{n3}{\hatvect{n}} % annotation
+            \Bigr)
+      \Biggr)
 \end{equation}
+\annotate[yshift=-1em]{below,left}{n1}{$\ds{s}$}
+\annotate[yshift=-1em]{below,left}{n2}{$\ds{v}$}
+\annotate[yshift=-1em]{below,left}{n3}{$\hatvect{n}(\hatvect{r})$}
+\annotate[yshift=0.5em]{above,right}{n1,n4}{$\ds{\vect{s}}$}
 
-Luego, sustituyendo la definición \eqref{eq:campo_distr_continua}
-en \eqref{eq:Ley_de_gauss}:
+Las integrales de superficie y de volumen se pueden evaluar en cualquier
+orden, y la densidad se evalúa en el dominio de la integral de volumen.
+Luego, se puede escribir:
 \begin{equation}
-\int_S \ds{\vect{r}}^2 (\vect{E} \cdot \hatvect{n}) =
-    k\int_S \ds{\vect{r}}^2
+    \int_S \ds{\vect{r}}^2
         \int_V \ds{\vect{r}'}^3
           \rho(\vect{r}')
           \frac{\vect{r} - \vect{r}'}{ \norma{ \vect{r} - \vect{r}' }^3 }
+      \cdot \hatvect{n}
+    = \int_V \ds{\vect{r}'}^3 \rho(\vect{r}')
+        \int_S \ds{\vect{r}}^2
+          \frac{\vect{r} - \vect{r}'}{ \norma{ \vect{r} - \vect{r}' }^3 }
     \cdot \hatvect{n}
-    % = k \int_V \ds{\vect{r}'}^3 \rho(\vect{r}')
-    %     \int_S \ds{\vect{r}}^2
-    %       \frac{\vect{r} - \vect{r}'}{ \norma{ \vect{r} - \vect{r}' }^3 }
-    % \cdot \hatvect{n} =
-    % k \int_V \ds{\vect{r}'}^3 \rho(\vect{r}') F(\vect{r}')
+    = \int_V \ds{\vect{r}'}^3 \rho(\vect{r}') F(\vect{r}')
+\end{equation}
+
+La integral de superficie, vista como una función de $\vect{r}'$,
+es la de el diferencial de ángulo sólido que subtiende $S$ sobre un observador
+en $\vect{r}$
+(ver sección 4\-1 de ``Campos electromagnéticos'', de Roald K.\ Wangsness).      %TODO bibtex
+Para notarlo, reescribimos:
+
+\vspace{2em}
+\begin{equation}
+    \int_S \ds{\vect{r}}^2
+          \frac{\vect{r} - \vect{r}'}{ \norma{ \vect{r} - \vect{r}' }^3 }
+    \cdot \hatvect{n}
+    = \int_S \ds{\vect{r}}^2
+      \frac{
+          \eqnmarkbox[gray]{n1}{\vect{R}} % annotation
+        }{
+            \norma{\vect{R}}^3
+        }
+      \cdot \hatvect{n}
+    = \int_S
+      \frac{
+          \eqnmarkbox[gray]{n2}{\hatvect{R}} % annotation
+          \cdot
+          \hatvect{n}
+        }{
+            \norma{\vect{R}}^2
+        }
+      \ds{\vect{r}}^2
+    = \int_S
+      \frac{\cos(\theta)}{ \norma{\vect{R}}^2 }
+      \ds{\vect{r}}^2
+    = \int_S \ds{\Omega}
+\end{equation}
+\annotate[yshift=2em]{above,right}{n1}{
+    Pos.\ respecto de $\vect{r}$, del
+    diferencial de superf.\ con normal $\hatvect{n}$.
+}
+\annotate[yshift=0.5em]{above,right}{n2}{$\vect{R}\norma{R}^{-1}$}
+
+Luego, el ángulo subtendido por el diferencial en $S$, sería el mismo que el
+que subtiende el de un una esfera de radio $a$, centrada en $\vect{r}$,
+como se muestra en la figura.                                                   %TODO figura
+\begin{equation}
+    \ds{\Omega} = \frac{ \ds{s}^2 }{ \norma{ \vect{R} }^2 }
+    = \frac{\ds{s'}^2}{a^2}
+\end{equation}
+
+Si $\vect{r}$ se encuentra dentro de $S$, entonces todos los elementos de
+superficie tendrán normales que apuntan radialmente hacia afuera de la esfera
+de radio $a$, y la integral toma el valor:
+\begin{equation}
+    \int_S \ds{\Omega}
+    = \int_S \frac{1}{a^2} \ds{s'}^2
+    = \frac{1}{a^2} \int_S \ds{s'}^2
+    = \frac{1}{a^2} 4 \pi a^2 = 4\pi
+    \qquad\qquad
+    \text{ ($\vect{r}$ DENTRO DE $S$) }
+\end{equation}
+
+Y si $\vect{r}$ se encuentra fuera de $S$, entonces, para cada elemento de
+superficie en $S$, cuya normal no sea perpendicular a su respectivo $\vect{R}$,
+existirá otro elemento de superficie que subtienda el mismo ángulo sólido,
+pero cuya normal apunte en dirección opuesta, como se muestra en la figura.       %TODO figura
+Luego:
+\begin{equation}
+    \int_S \ds{\Omega} = 0
+    \qquad\qquad
+    \text{ ($\vect{r}$ FUERA DE $S$) }
+\end{equation}
+
+Por lo tanto, la integral \eqref{eq:ley_de_gauss_int} es:
+\begin{equation}\label{eq:ley_de_gauss_casos}
+    \oint_S \vect{E} \cdot \ds{\vect{s}}^2 =
+    \begin{cases}
+        \begin{aligned}
+            &{\displaystyle 4k\pi \int_V \rho \ds{v}^3 = 4k \pi Q_V }
+            \qquad\qquad
+            &\text{ SI $\vect{r}$ ESTÁ DENTRO DE $S$ }
+            \\[1em]
+            &{\displaystyle 0 \int_V \rho \ds{v}^3 = 0 }
+            \qquad\qquad % useless here but meh
+            &\text{ SI $\vect{r}$ ESTÁ FUERA DE $S$ }
+        \end{aligned}
+    \end{cases}
+\end{equation}
 \end{equation}
