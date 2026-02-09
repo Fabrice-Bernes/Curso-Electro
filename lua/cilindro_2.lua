@@ -1,0 +1,77 @@
+local azimuth = 20
+local g = graph3d:new {
+    window = {-5,5, -5,5},
+    viewdir={azimuth,70},
+    size = {8,8},
+    margin = {0,0,0,0},
+}
+g:Linejoin('round'); g:Linewidth(6)
+
+-- Cola de E2 y cabeza de E1
+-- Para sentido físico. Si el de abajo es x, y, z1, entonces
+-- el de arriba tiene que ser -x, -y, z2
+local E2, E1 = M(-2,2,4), M(2,-2,-1.5)
+
+g:Lineoptions('solid', 'gray', 6)
+g:Dscene3d(
+
+    -- Plano
+    g:addPlane( {Origin, vecK}, {opacity=0, edge=true} ),
+
+    -- Vectores de E.
+    g:addPolyline( -- A este habrá que agregarle el conito a mano
+        { E1, Origin },
+        {color='black', arrows=1, hidden=true, hiddenstyle='dashed'}
+    ),
+    g:addPolyline(
+        { Origin, E2 },
+        {color='black', arrows=1, hidden=true, hiddenstyle='dashed'}
+    )
+)
+
+g:Lineoptions('solid', 'black', 6)
+
+-- Punta de flecha en E_1
+-- TODO. Convertir en módulo
+-- g:Dcone(0.1*M(2, -2, -1.5), 0.1, Origin, {mode=mWireframe, color='black'})
+g:Dpoly(
+    regular_pyramid(10, 0.05, 0.03, false, 0.07*M(2, -2, -1.5), -M(2,-2, -1.5)),
+    {color='black'}
+)
+
+--      E_2
+--   B-C
+--   | |
+--   A-D
+-- E1
+local dl = pt3d.normalize( M( (E2-E1).x, (E2-E1).y, 0 ) )
+local A = 0.5*E1 - 0.3*dl
+local B = M( A.x, A.y, -A.z )
+local C = B + (5* M(pt3d.normalize(E2-E1).x, pt3d.normalize(E2-E1).y, 0))
+-- local D = C - 2*vecK
+local D = M(C.x, C.y, -C.z)
+g:Dpolyline3d( { A, B, C, D }, true, 'solid')
+g:Dpolyline3d( { M(A.x, A.y, 0), M(C.x, C.y, 0) }, true, 'dotted, gray')
+
+-- Carga
+g:Dcircle3d(M(0.5, 0.5, 0), 1, vecK, 'pattern=crosshatch, opacity=0.3')
+
+-- Lineas para la altura del rectángulo
+g:Dpolyline3d( {C + 0.5*dl, D + 0.5*dl}, '<->')
+-- g:Dpolyline3d(
+--     {
+--         { C,  C + 0.5*dl },
+--         { D , D + 0.5*dl }
+--     },
+--     'dashed'
+-- )
+
+
+g:Dlabel3d(
+    '$\\sigma$', M(0.5, 0.5, 0), {pos='E'},
+    '$\\vect{E}_1$', E1, {pos='W'},
+    '$\\vect{E}_2$', E2, {pos='E'},
+    '$h$', M( (C + 0.5*dl).x, (C + 0.5*dl).y, 0 ), {pos='E'}
+)
+
+g:Show()

@@ -421,9 +421,33 @@ que en forma integral, es, de acuerdo con \eqref{eq:ley_de_gauss_casos}:
 
 Donde $V$ es un volumen que contiene por completo
 a la distribución de cargas, y $S$ su superficie.
-En la figura %TODO figura
-se muestra la superficie que delimita
+En la figura \ref{fig:cilindro_sigma} se muestra la superficie que delimita
 a un cilindro de altura $h$, que cumple las características de $V$.
+
+\vspace{-20pt}
+\begin{figure}[H]
+    \begin{minipage}[c]{0.50\textwidth}
+        \centering
+        \begin{luadraw}{name=cilindro_sigma,exec=false}
+            require "lua.cilindro" -- % chktex 18 chktex 8
+        \end{luadraw}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[c]{0.45\textwidth}
+        \caption{
+            El cilindro, cuyas tapas están orientadas según las normales
+            $\hatvect{n}_1$ y $\hatvect{n}_2 = - \hatvect{n}_1$, contiene
+            por completo a la distribución de carga superficial, de densidad
+            $\sigma(\vect{r})$.
+            \\[1em]
+            Los vectores $\vect{E}_1$ y $\vect{E}_2$ son los valores de
+            $\vect{E}$ \textit{justo arriba} y \textit{justo abajo} del punto
+            $(0,0,0)$, pero por claridad, se acomodó a $\vect{E}_1$ para que
+            su punta esté sobre $(0,0,0)$.
+        }%
+        \label{fig:cilindro_sigma}
+    \end{minipage}
+\end{figure}
 
 Por otro lado, si se aplica el teorema de la divergencia
 \eqref{eq:teorema_de_la_divergencia} y se procede por evaluación directa,
@@ -514,6 +538,14 @@ donde $\vect{E}_1$ y $\vect{E}_2$ son los valores del campo
 \textit{justo por debajo} y \textit{justo por encima} del plano que contiene
 a la distribución de carga superficial, respectivamente.
 
+\textbf{Nota}:
+En la figura \ref{fig:cilindro_sigma}, se le llama
+de manera incorrecta (para mantener la figura legible),
+$\vect{E}_1$ y $\vect{E}_2$ a lo que en realidad serían sólo dos valores
+particulares de las funciones que aparecen en
+la ecuación \eqref{eq:flujo_limite_2}. Lo correcto sería etiquetar a
+los vectores de la figura como $\vect{E}_1(0,0,0)$ y $\vect{E}_2(0,0,0)$.
+
 Luego, comparando \eqref{eq:flujo_limite_2} con \eqref{eq:gauss_cilindro},
 la cual es válida para el cilindro de altura límite que se está considerando,
 se obtiene la relación entre las componentes perpendiculares a la distribución
@@ -535,6 +567,31 @@ de carga:
 
 Para comparar las componentes tangenciales del campo, se puede construir
 una superficie que atraviese al plano sobre el que se define a $\sigma$
-(ver figura), %TODO figura
+(ver figura \ref{fig:cilindro_sigma_2}), %TODO TERMINAR
 y usar y el teorema de Stokes para la evaluar la integral de
 $\nabla \times \vect{E}$ como una integral de línea:
+
+\vspace{-20pt}
+\begin{figure}[H]
+    \begin{minipage}[c]{0.50\textwidth}
+        \centering
+        \begin{luadraw}{name=cilindro_sigma_2,exec=true}
+            require "lua.cilindro_2" -- % chktex 18 chktex 8
+        \end{luadraw}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[c]{0.45\textwidth}
+        \caption{
+            El cilindro, cuyas tapas están orientadas según las normales
+            $\hatvect{n}_1$ y $\hatvect{n}_2 = - \hatvect{n}_1$, contiene
+            por completo a la distribución de carga superficial, de densidad
+            $\sigma(\vect{r})$.
+            \\[1em]
+            Los vectores $\vect{E}_1$ y $\vect{E}_2$ son los valores de
+            $\vect{E}$ \textit{justo arriba} y \textit{justo abajo} del punto
+            $(0,0,0)$, pero por claridad, se acomodó a $\vect{E}_1$ para que
+            su punta esté sobre $(0,0,0)$.
+        }%
+        \label{fig:cilindro_sigma_2}
+    \end{minipage}
+\end{figure}
