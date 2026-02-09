@@ -245,4 +245,165 @@ Por lo tanto, la integral \eqref{eq:ley_de_gauss_int} es:
         \end{aligned}
     \end{cases}
 \end{equation}
+
+\section{Potencial escalar}
+Notando lo siguiente:
+\begin{equation}
+\begin{aligned}
+    \nabla \left( \frac{1}{ \norma{\vect{r} - \vect{r}'} } \right)
+    &= \begin{pmatrix}
+        {\displaystyle \diffp*{\norma{\vect{r}-\vect{r}'}^{-1}}{x}}
+        \\[1em]
+        {\displaystyle \diffp*{\norma{\vect{r}-\vect{r}'}^{-1}}{y}}
+        \\[1em]
+        {\displaystyle \diffp*{\norma{\vect{r}-\vect{r}'}^{-1}}{z}}
+    \end{pmatrix}
+    = \begin{pmatrix}
+        {\displaystyle
+            \diffp*{ \frac{1}{ \sqrt{(x-x')^2 + (y-y')^2 + (z-z')^2} } }{x}
+        }
+        \\[1em]
+        {\displaystyle
+            \diffp*{ \frac{1}{ \sqrt{(x-x')^2 + (y-y')^2 + (z-z')^2} } }{y}
+        }
+        \\[1em]
+        {\displaystyle
+            \diffp*{ \frac{1}{ \sqrt{(x-x')^2 + (y-y')^2 + (z-z')^2} } }{z}
+        }
+    \end{pmatrix}
+    = \cdots
+    \\\cdots&
+    = \begin{pmatrix}
+        {\displaystyle
+            - \frac{1}{2}\frac{ 2(x - x') }{
+                \Bigl( (x-x')^2 + (y-y')^2 + (z-z')^2 \Bigr)^{3/2}
+            }
+        }
+        \\[1em]
+        {\displaystyle
+            - \frac{1}{2}\frac{ 2(y - y') }{
+                \Bigl( (x-x')^2 + (y-y')^2 + (z-z')^2 \Bigr)^{3/2}
+            }
+        }
+        \\[1em]
+        {\displaystyle
+            - \frac{1}{2}\frac{ 2(z - z') }{
+                \Bigl( (x-x')^2 + (y-y')^2 + (z-z')^2 \Bigr)^{3/2}
+            }
+        }
+    \end{pmatrix}
+    = - \begin{pmatrix}
+        {\displaystyle \frac{ x - x' }{ \norma{ \vect{r} - \vect{r}' }^3 } }
+        \\[1em]
+        {\displaystyle \frac{ y - y' }{ \norma{ \vect{r} - \vect{r}' }^3 } }
+        \\[1em]
+        {\displaystyle \frac{ z - z' }{ \norma{ \vect{r} - \vect{r}' }^3 } }
+    \end{pmatrix}
+    = - \frac{ \vect{r} - \vect{r}' }{ \norma{\vect{r}-\vect{r}'}^3 }
+\end{aligned}
+\end{equation}
+
+La definición \eqref{eq:campo_distr_continua} se puede escribir como:
+\begin{equation}
+    \vect{E}(\vect{r})
+    = - k \int \ds{\vect{r}'}^3
+      \eqnmarkbox[gray]{n1}{\rho(\vect{r}')} % annotation
+      \,
+      \eqnmarkbox[gray]{n2}{\nabla} % annotation
+      \left( \frac{1}{\norma{\vect{r}-\vect{r}'}} \right)
+    = - \int \ds{\vect{r}'}^3
+      \nabla \left(
+          k \frac{\rho(\vect{r}')}{ \norma{\vect{r}-\vect{r}'} }
+      \right)
+\end{equation}
+\annotate[yshift=0.5em]{above,left}{n1}{Definido en términos de $\vect{r}'$}
+\annotate[yshift=-1em]{below,left}{n2}{Definido en términos de $\vect{r}$}
+
+Los operadores $\nabla$ y $\int \ds{v}$ conmutan, y por lo tanto:
+\begin{equation}\label{eq:E=-nabla(phi)}
+    \vect{E}(\vect{r})
+    = - \nabla \left(
+          \int \ds{\vect{r}}^3
+          \,\,
+          k \frac{\rho(\vect{r}')}{ \norma{\vect{r}-\vect{r}'} }
+      \right)
+    = - \nabla \phi(\vect{r})
+\end{equation}
+%
+donde $\phi$ es es el \textit{potencial escalar}:
+\begin{equation}
+    \phi(\vect{r})
+    = k \int
+      \frac{\rho(\vect{r}')}{ \norma{\vect{r}-\vect{r}'} }
+      \ds{\vect{r}}^3
+\end{equation}
+
+Notar que de $\vect{E} = - \nabla \phi$ se sigue que
+$\nabla \times \vect{E} = 0$:
+\begin{equation}\label{eq:rotacional_E}
+    \nabla \times \vect{E} = - \nabla \times \nabla \phi = 0
+\end{equation}
+
+\section{Trabajo eléctrico}
+En general, el trabajo realizado por una fuerza $\vect{F}_\text{ext.}$ a
+lo largo de una trayectoria es:
+\begin{equation}
+    W_{a \rightarrow b} = \int_a^b \vect{F}_\text{ext.} \cdot \ds{\vect{\ell}}
+\end{equation}
+
+Entonces, en presencia de un campo $E$, el trabajo que debe realizar una fuerza
+externa para llevar a una carga $q$ en equilibrio\footnote{
+    Es decir que en todo momento se cumple
+    $ \vect{F}_\text{ext.} + \vect{F}_\text{elec.} = 0 $.
+    Es decir:
+    $ \vect{F}_\text{ext.} = - \vect{F}_\text{elec.} $
+}, desde $A$ hasta $B$, es,
+de acuerdo con \eqref{eq:F=qE} y \eqref{eq:E=-nabla(phi)}:
+\begin{equation}
+\begin{aligned}
+    W_{a \rightarrow b}
+    &= \int_A^B \vect{F}_\text{ext.} \cdot \ds{\vect{\ell}}
+    = - \int_A^B \vect{F}_\text{elec.} \cdot \ds{\vect{\ell}}
+    = - q \int_A^B \vect{E} \cdot \ds{\vect{\ell}}
+    = q \int_A^B \nabla \phi \cdot \ds{\vect{\ell}}
+    \\
+    &= q \int_A^B \left(
+          \diffp{\phi}{x}\hatvect{i}
+        + \diffp{\phi}{y}\hatvect{j}
+        + \diffp{\phi}{z}\hatvect{k}
+      \right)
+      \cdot
+      \left( \ds{x}\hatvect{i} + \ds{y}\hatvect{j} + \ds{z}\hatvect{k} \right)
+    \\
+    &= q \int_A^B
+    \eqnmarkbox[gray]{n1}{    % annotation
+          \left(
+              \diffp{\phi}{x}\ds{x}
+            + \diffp{\phi}{y}\ds{y}
+            + \diffp{\phi}{z}\ds{z}
+          \right)
+    }
+    = q \int_A^B \ds{\phi}
+    = q \Bigl( \phi(B) - \phi(A) \Bigr)
+\end{aligned}
+\end{equation}
+\annotate[yshift=-0.5em]{below,left}{n1}{
+    $\displaystyle\sum_i \diffp{\phi}{x_i}\ds{x_i} = \ds{\phi}(x,y,z)$
+}
+\vspace{1em}
+
+Para el caso en el que $B$ y $A$ coinciden, se tiene
+$W_{A \rightarrow A} = q[ \phi(A) - \phi(A) ] = 0$.
+Es decir, el trabajo sobre trayectorias cerradas es nulo. La fuerza eléctrica
+es conservativa, como se esperaba de $\nabla \times \vect{E} = 0$:
+\begin{equation}
+    - q \oint_C \vect{E} \cdot \ds{\vect{\ell}}
+    = - q \int_S \Bigl(\nabla \times \vect{E}\Bigr) \cdot \ds{s}^2
+    = 0
+    \implies \oint \vect{F}_\text{elec.} \cdot \ds{\ell} = 0
+\end{equation}
+
+Donde $C$ $S$ son la trayectoria cerrada, y la superficie delimitada por dicha
+trayectoria, respectivamente. Ver figura. %TODO FIGURA
+
 \end{equation}
