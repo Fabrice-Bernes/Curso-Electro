@@ -12,33 +12,19 @@ g:Linejoin('round'); g:Linewidth(6)
 -- el de arriba tiene que ser -x, -y, z2
 local E2, E1 = M(-2,2,4), M(2,-2,-1.5)
 
-g:Lineoptions('solid', 'gray', 6)
-g:Dscene3d(
-
-    -- Plano
-    g:addPlane( {Origin, vecK}, {opacity=0, edge=true} ),
-
-    -- Vectores de E.
-    g:addPolyline( -- A este habrá que agregarle el conito a mano
+g:Dpolyline3d(
+    {
         { E1, Origin },
-        {color='black', arrows=1, hidden=true, hiddenstyle='dashed'}
-    ),
-    g:addPolyline(
         { Origin, E2 },
-        {color='black', arrows=1, hidden=true, hiddenstyle='dashed'}
-    )
+    },
+    '-latex,black'
 )
+
+g:Dplane( {Origin, vecK}, vecI, 7.5, 7.5, all, 'gray' )
 
 g:Lineoptions('solid', 'black', 6)
 
--- Punta de flecha en E_1
--- TODO. Convertir en módulo
--- g:Dcone(0.1*M(2, -2, -1.5), 0.1, Origin, {mode=mWireframe, color='black'})
-g:Dpoly(
-    regular_pyramid(10, 0.05, 0.03, false, 0.07*M(2, -2, -1.5), -M(2,-2, -1.5)),
-    {color='black'}
-)
-
+-- TODO esto se podía hacer con g:Dplane y ya, pero tal vez es útil conocer las esquinas
 --      E_2
 --   B-C
 --   | |
@@ -50,8 +36,16 @@ local B = M( A.x, A.y, -A.z )
 local C = B + (5* M(pt3d.normalize(E2-E1).x, pt3d.normalize(E2-E1).y, 0))
 -- local D = C - 2*vecK
 local D = M(C.x, C.y, -C.z)
-g:Dpolyline3d( { A, B, C, D }, true, 'solid')
-g:Dpolyline3d( { M(A.x, A.y, 0), M(C.x, C.y, 0) }, true, 'dotted, gray')
+g:Dpolyline3d( { A, B, C, D }, true, 'solid, gray')
+g:Dpolyline3d( { M(A.x, A.y, 0), M(C.x, C.y, 0) }, false, 'dotted, gray')
+g:Dpolyline3d(
+    {
+        {B + dl, B + 1.5*dl},
+        {D - dl, D - 1.5*dl}
+    },
+    false,
+    '-latex,black'
+)
 
 -- Carga
 g:Dcircle3d(M(0.5, 0.5, 0), 1, vecK, 'pattern=crosshatch, opacity=0.3')
@@ -73,5 +67,8 @@ g:Dlabel3d(
     '$\\vect{E}_2$', E2, {pos='E'},
     '$h$', M( (C + 0.5*dl).x, (C + 0.5*dl).y, 0 ), {pos='E'}
 )
+
+
+g:Dpolyline3d( {C + 0.5*dl, D + 0.5*dl}, '<->')
 
 g:Show()
