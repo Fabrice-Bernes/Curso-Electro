@@ -230,6 +230,23 @@ Luego:
     \text{ ($\vect{r}$ FUERA DE $S$) }
 \end{equation}
 
+Con lo que queda demostrado que:
+\begin{equation}\label{eq:integral_angulo_solido}
+    \int_S \ds{\vect{r}}^2
+          \frac{\vect{r} - \vect{r}'}{ \norma{ \vect{r} - \vect{r}' }^3 }
+    \cdot \hatvect{n}
+    =
+    \begin{cases}
+        \begin{aligned}
+            &{\displaystyle 4\pi}
+            &\text{ Si $\vect{r}$ está dentro de $S$. }
+            \\
+            &{\displaystyle 0}
+            &\text{ Si $\vect{r}$ está fuera de $S$. }
+        \end{aligned}
+    \end{cases}
+\end{equation}
+
 Por lo tanto, la integral \eqref{eq:ley_de_gauss_int} es:
 \begin{equation}\label{eq:ley_de_gauss_casos}
     \oint_S \vect{E} \cdot \ds{\vect{s}}^2 =
@@ -248,7 +265,7 @@ Por lo tanto, la integral \eqref{eq:ley_de_gauss_int} es:
 
 \section{Potencial escalar}
 Notando lo siguiente:
-\begin{equation}
+\begin{equation}\label{eq:nabla_1/r}
 \begin{aligned}
     \nabla \left( \frac{1}{ \norma{\vect{r} - \vect{r}'} } \right)
     &= \begin{pmatrix}
@@ -642,4 +659,249 @@ cambia en su componente perpendicular a la misma, pero no en la perpendicular:
     \qquad\qquad
     &\vect{E}_{1\perp} = \vect{E}_{1\perp} + 4\pi \sigma
 \end{aligned}
+\end{equation}
+
+\section{Ecuaciones de Poisson y de Laplace}
+\textbf{Nota:} A partir de ahora: $k = 1$. Nosotros sabemos que:
+\begin{align}
+    \label{eq:div_E}
+    &\nabla \cdot \vect{E} = 4\pi\rho
+    \\
+    \label{eq:rot_E}
+    &\nabla \times \vect{E} = 0
+    \\
+    \label{eq:grad_phi}
+    &\vect{E} = - \nabla \phi
+\end{align}
+
+Sustituyendo \eqref{eq:grad_phi} en \eqref{eq:div_E}:
+\begin{equation}
+    - \nabla \cdot \left( \nabla \phi \right) = 4\pi\rho
+    \implies
+    \begin{cases}
+        \rho \neq 0: \nabla^2 \phi = -4\pi \rho
+        &\text{(Ecuación de Poisson.)}
+        \\[1em]
+        \rho = 0: \nabla^2 \phi = 0
+        &\text{(Ecuación de Laplace.)}
+    \end{cases}
+\end{equation}
+
+De la definición dada en la ecuación \eqref{eq:def_potencial_escalar},
+se puede verificar que $\phi$ satisface siempre la ecuación de Poisson:
+\begin{equation}\label{eq:laplaciano_phi_WIP}
+    \nabla^2 \phi
+    = \nabla^2
+      \int \ds{\vect{r}'}^3
+      \frac{\rho(\vect{r}')}{ \norma{\vect{r}-\vect{r}'} }
+    = \int
+      \biggl[
+          \rho(\vect{r}')
+          \nabla^2 \biggl( \frac{1}{ \norma{\vect{r}-\vect{r}'} } \biggr)
+      \biggr]
+      \ds{\vect{r}'}^3
+\end{equation}
+
+Donde se usó el hecho de que la variable de integración es $\vect{r}'$, y el
+operador $\nabla^2$ es respecto de $\vect{r}$, por lo que puede
+entrar a la integral, y además $\rho(\vect{r}')$ es constante en lo que respecta
+a $\nabla^2$ por la misma razón.
+Ahora evaluamos el término $\nabla^2 ( \norma{\vect{r} - \vect{r}'}^{-1} )$,
+para el cual se distinguen dos casos:
+
+\begin{itemize}
+    \item Si  $\vect{r} = \vect{r}'$:
+\end{itemize}
+\begin{equation}\label{eq:laplaciano_1/r r-r'=0}
+    \vect{r} - \vect{r}' = 0
+    \implies
+    \nabla^2 \biggl( \frac{1}{ \norma{\vect{r}-\vect{r}'} } \biggr)
+    = \nabla^2 \left( \frac{1}{0} \right)
+    \qquad
+    \text{INDEFINIDO.}
+\end{equation}
+
+\begin{itemize}
+    \item Si  $\vect{r} \neq \vect{r}'$:
+\end{itemize}
+\begin{equation}\label{eq:laplaciano_1/r_largo}
+\begin{aligned}
+    \nabla^2 \biggl( \frac{1}{ \norma{\vect{r}-\vect{r}'} } \biggr)
+    &= \nabla
+      \cdot
+      \eqnmarkbox[gray]{n1}{ % annotation
+          \nabla \biggl( \frac{1}{ \norma{\vect{r}-\vect{r}'} } \biggr)
+      }
+    = - \nabla
+      \cdot
+      \frac{\vect{r} - \vect{r}'}{\norma{\vect{r}-\vect{r}'}^3}
+    \\
+    &=
+    - \diffp**{x}{
+        \left(
+            \frac{
+                x - x'
+            }{
+                \Bigl[ (x - x')^2 + (y-y')^2 + (z-z')^2 \Bigr]^{3/2}
+            }
+        \right)
+    }
+    - \diffp**{y}{
+        \left( \frac{ y - y' }{ \norma{\vect{r}-\vect{r}'}^3 } \right)
+    }
+    - \cdots
+\end{aligned}
+\end{equation}
+\annotate[yshift=0.5em]{above,left}{n1}{Ver ecuación \eqref{eq:nabla_1/r}}
+
+En notación de Einstein, haciendo uso de las siguientes propiedades:
+%
+% DESCOMENTAR minipage PARA COLOCAR BIEN LAS ANOTACIONES
+% Ver https://github.com/st--/annotate-equations/issues/12
+%
+% \begin{minipage}{\textwidth}
+\begin{align}
+    & \nabla \cdot A = \diffp**{x^i}{A^i} \equiv \partial_i A^i
+    \\
+    & \partial_i (\vect{r} - \vect{r}')^j
+    = \partial_i ( x^j - ( x' )^j )
+    = \diffp{x^j}{x^i}
+    - \eqnmarkbox[gray]{n1}{\diffp{( x' )^j}{x^i}}  % annotation
+    % = \diffp{x^j}{x^i} - \cancel{ \diffp{( x' )^j}{x^i} }
+    = \tensor{\delta}{^j_i}
+    \\
+    & \norma{ \vect{R} }^2 = R_i R^i
+    \implies
+    \norma{ \vect{R} } = \Bigl( R_i R^i \Bigr)^{ 1/2 }
+    \\
+    & [ \vect{r} - \vect{r}' ]_i = r_i - r'_i
+\end{align}
+\annotate[yshift=0.5em]{above,left}{n1}{$=0$}
+% \end{minipage}
+%
+se puede calcular \eqref{eq:laplaciano_1/r_largo} como sigue:
+%
+\begin{equation}\label{eq:laplaciano_1/r r-r'!=0} % TODO anotar pasos
+\begin{aligned}
+    \nabla \cdot \frac{\vect{r} - \vect{r}'}{\norma{\vect{r}-\vect{r}'}^3}
+    &= \diffp**{x^i}{
+        \left[
+            \frac{\vect{r} - \vect{r}'}{\norma{\vect{r}-\vect{r}'}^3}
+        \right]^i
+    }
+    = \diffp**{x^i}{
+        \frac{x^i - x'^i}{ \norma{\vect{r}-\vect{r}'}^3 }
+    }
+    \\ %\text{\tiny regla del producto}
+    &= \diffp*{( x^i - x'^i )}{x^i}
+      \frac{1}{ \norma{\vect{r}-\vect{r}'}^3 }
+    + (x^i - x'^i)
+      \diffp*{ \frac{1}{ \norma{\vect{r}-\vect{r}'}^3 } }{x^i}
+    \\
+    &= \frac{ \tensor{\delta}{^i_i} }{ \norma{\vect{r}-\vect{r}'}^3 }
+    + (x^i - x'^i)
+      \diffp*{ \frac{1}{\bigl[ (x_j - x'_j)(x^j - x'^j) \bigr]^{3/2}} }{x^i}
+    \\
+    &= \frac{ \tensor{\delta}{^i_i} }{ \norma{\vect{r}-\vect{r}'}^3 }
+    - \frac{3}{2}
+      \frac{ x^i - x'^i }{ \bigl[ (x_j - x'_j)(x^j - x'^j) \bigr]^{5/2} }
+      \diffp**{x^i}{ \bigl[ (x_j - x'_j)(x^j - x'^j) \bigr] }
+    \\
+    &= \frac{ \tensor{\delta}{^i_i} }{ \norma{\vect{r}-\vect{r}'}^3 }
+    - \frac{3}{2}
+      \frac{ x^i - x'^i }{ \bigl[ (x_j - x'_j)(x^j - x'^j) \bigr]^{5/2} }
+      \Bigl(
+          \tensor{\delta}{_i_j}(x^j - x'^j)
+        + (x_j - x'_j)\tensor{\delta}{^j_i}
+      \Bigr)
+    % &= \frac{ \tensor{\delta}{^i_i} }{ \norma{\vect{r}-\vect{r}'}^3 }
+    % + (x^i - x'^i)
+    %   \diffp*{ \frac{1}{ \norma{\vect{r}-\vect{r}'}^3 } }{x^i}
+    % \\
+    % &= \frac{ \tensor{\delta}{^i_i} }{ \norma{\vect{r}-\vect{r}'}^3 }
+    % - 3 \frac{x^i - x'^i}{ \norma{\vect{r}-\vect{r}'}^5 }
+    %   \diffp*{ \norma{ \vect{r}-\vect{r}' } }{x^i}
+    % \\
+    % &= \frac{ \tensor{\delta}{^i_i} }{ \norma{\vect{r}-\vect{r}'}^3 }
+    % - 3 \frac{x^i - x'^i}{ \norma{\vect{r}-\vect{r}'}^5 }
+    %   \diffp**{x^i}{ \Bigl[ (x_j - x'_j)(x^j - x'^j) \Bigr] }
+    \\
+    &= \frac{ \tensor{\delta}{^i_i} }{ \norma{\vect{r}-\vect{r}'}^3 }
+    - \frac{3}{2}
+      \frac{ x^i - x'^i }{ \norma{\vect{r}-\vect{r}'}^5 }
+      \Bigl(
+          x_i - x'_i
+        + x_i - x'_i
+      \Bigr)
+    \\
+    &= \frac{ \tensor{\delta}{^i_i} }{ \norma{\vect{r}-\vect{r}'}^3 }
+    - \frac{3}{2}
+      \frac{ ( x^i - x'^i )2(x_i - x'_i) }{ \norma{\vect{r}-\vect{r}'}^5 }
+    \\
+    &= \frac{ \tensor{\delta}{^i_i} }{ \norma{\vect{r}-\vect{r}'}^3 }
+    - \frac{ 3( x^i - x'^i )(x_i - x'_i) }{ \norma{\vect{r}-\vect{r}'}^5 }
+    \\
+    &= \frac{ \tensor{\delta}{^i_i} }{ \norma{\vect{r}-\vect{r}'}^3 }
+    - \frac{ 3\norma{\vect{r}-\vect{r}'}^2 }{ \norma{\vect{r}-\vect{r}'}^5 }
+    \\
+    &= \frac{ 3 }{ \norma{\vect{r}-\vect{r}'}^3 }
+    - \frac{ 3 }{ \norma{\vect{r}-\vect{r}'}^3 }
+    = 0
+\end{aligned}
+\end{equation}
+
+De acuerdo con los casos \eqref{eq:laplaciano_1/r r-r'=0} y
+\eqref{eq:laplaciano_1/r r-r'!=0}, la función
+$\nabla^2 \norma{ \vect{r}-\vect{r}' }^{-1}$ es igual a cero para todos
+los valores de $\vect{r}$ distintos de $\vect{r}'$, y se dispara cuando
+se cumple la igualdad. Es decir, es una Delta de Dirac centrada en
+$\vect{r}'$. Sin embargo, aún nos hace falta conocer el valor que da si se
+la integra en un volumen cerrado, para poder determinar su forma exacta.
+Entonces:
+%
+\begin{equation}\label{eq:integral_laplaciano_1/r}
+\begin{aligned}
+    \int_V \ds{\vect{r}'}^3 \nabla^2 \frac{1}{ \norma{\vect{r}-\vect{r}'} }
+    &= \int_V \ds{\vect{r}'}^3
+      \nabla \cdot \nabla\frac{1}{ \norma{\vect{r}-\vect{r}'} }
+    = \int_S \ds{\vect{r}'}^2
+      \eqnmarkbox[gray]{n1}{\nabla\frac{1}{ \norma{\vect{r}-\vect{r}'} }}       % annotation
+      \cdot \hatvect{n}
+    \\
+    &= - \int_S \ds{\vect{r}'}^2
+      \frac{ \vect{r} - \vect{r}' }{ \norma{\vect{r}-\vect{r}'}^3 }
+      \cdot \hatvect{n}
+    \eqnmarkbox[gray]{n2}{=} % annotation
+    \begin{cases}
+        & -4\pi \text{ si $\vect{r}$ está dentro de $V$}
+        \\
+        & 0 \text{ si $\vect{r}$ está fuera de $V$}
+    \end{cases}
+\end{aligned}
+\end{equation}
+\annotate[yshift=0.5em]{above,left}{n1}{Ver ecuación \eqref{eq:nabla_1/r}}
+\annotate[yshift=-1em]{below,left}{n2}{
+    Ver ecuación \eqref{eq:integral_angulo_solido}
+}
+
+Ahora sí, de \eqref{eq:laplaciano_1/r r-r'=0},
+\eqref{eq:laplaciano_1/r r-r'!=0}, y \eqref{eq:integral_laplaciano_1/r}, se
+concluye que:
+\begin{equation}\label{eq:delta_dirac}
+    \nabla^2 \biggl( \frac{1}{ \norma{\vect{r}-\vect{r}'} } \biggr)
+    = -4\pi\delta( \vect{r} - \vect{r}' )
+\end{equation}
+
+Luego, sustituyendo \eqref{eq:delta_dirac} en \eqref{eq:laplaciano_phi_WIP}:
+\begin{equation}
+    \nabla^2 \phi(\vect{r})
+    = \int
+      \biggl[
+          \rho(\vect{r}')
+          \nabla^2 \biggl( \frac{1}{ \norma{\vect{r}-\vect{r}'} } \biggr)
+      \biggr]
+      \ds{\vect{r}'}^3
+    = -4\pi\int \rho(\vect{r}') \delta( \vect{r} - \vect{r}' )
+      \ds{\vect{r}'}^3
+    = -4\pi\rho(\vect{r})
 \end{equation}
