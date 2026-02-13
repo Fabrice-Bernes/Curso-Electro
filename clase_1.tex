@@ -499,7 +499,7 @@ pared del cilindro desaparece:
 Además, la única diferencia entre las tapas
 del cilindro, es que sus normales son opuestas, y por lo tanto:
 \vspace{1em}
-\begin{equation}
+\begin{equation}\label{normales_opuestas}
     \ds{\vect{s}_1}
     = \hatvect{n}_1 \ds{s_1}
     = \eqnmarkbox[gray]{n1}{\hatvect{n}_1} % annotation
@@ -567,31 +567,79 @@ de carga:
 
 Para comparar las componentes tangenciales del campo, se puede construir
 una superficie que atraviese al plano sobre el que se define a $\sigma$
-(ver figura \ref{fig:cilindro_sigma_2}), %TODO TERMINAR
+(ver figura \ref{fig:cilindro_sigma_2}),
 y usar y el teorema de Stokes para la evaluar la integral de
 $\nabla \times \vect{E}$ como una integral de línea:
 
-\vspace{-20pt}
 \begin{figure}[H]
     \begin{minipage}[c]{0.50\textwidth}
         \centering
-        \begin{luadraw}{name=cilindro_sigma_2,exec=true}
+        \begin{luadraw}{name=cilindro_sigma_2,exec=false}
             require "lua.cilindro_2" -- % chktex 18 chktex 8
         \end{luadraw}
     \end{minipage}
     \hfill
     \begin{minipage}[c]{0.45\textwidth}
         \caption{
-            El cilindro, cuyas tapas están orientadas según las normales
-            $\hatvect{n}_1$ y $\hatvect{n}_2 = - \hatvect{n}_1$, contiene
-            por completo a la distribución de carga superficial, de densidad
-            $\sigma(\vect{r})$.
-            \\[1em]
-            Los vectores $\vect{E}_1$ y $\vect{E}_2$ son los valores de
-            $\vect{E}$ \textit{justo arriba} y \textit{justo abajo} del punto
-            $(0,0,0)$, pero por claridad, se acomodó a $\vect{E}_1$ para que
-            su punta esté sobre $(0,0,0)$.
+            Por el Teorema de Stokes, la integral de línea de $\vect{E}$ sobre
+            la curva cerrada $ABCDA$, es igual a la integral de superficie
+            de $\nabla \times \vect{E}$. Además, en el límite $h \rightarrow 0$,
+            los segmentos $AB$ y $CD$ no contribuyen, y además el integrando
+            serán las componentes paralelas a la distribución de carga,
+            \textit{justo arriba} y \textit{justo debajo} de la misma.
         }%
         \label{fig:cilindro_sigma_2}
     \end{minipage}
 \end{figure}
+
+\begin{equation}
+    \int_S \left( \nabla \times \vect{E} \right) \ds{s}^2
+    = \int_C E \cdot \ds{\ell}
+\end{equation}
+%
+que en el límite $h \rightarrow 0$, se cumple
+$\ds{\vect{\ell}_1} = - \ds{\vect{\ell}_2}$, similar a lo explicado en
+\eqref{normales_opuestas}
+\begin{equation}
+\begin{aligned}
+    \biggl[
+          \int_S \left( \nabla \times \vect{E} \right) \ds{s}^2
+    \biggr]_{h \rightarrow 0}
+    &= \int_B^C \vect{E}_1 \cdot \ds{\vect{\ell}}
+    + \eqnmarkbox[gray]{n1}{\int_C^B \vect{E}_2 \cdot ( -\ds{\vect{\ell}} )}  % annotation
+    = \int_B^C \vect{E}_1 \cdot \ds{\vect{\ell}}
+    - \int_C^B \vect{E}_2 \cdot \ds{\vect{\ell}}
+    \\[1.5em]&
+    = \int_B^C \Bigl( \vect{E}_1 - \vect{E}_2 \Bigr) \cdot \ds{\vect{\ell}}
+    = \int_B^C \Bigl(
+        \vect{E}_1 \cdot \hatvect{\ell}- \vect{E}_2 \cdot \hatvect{\ell}
+      \Bigr) \ds{\ell}
+\end{aligned}
+\end{equation}
+\annotate[yshift=-0.5em]{below,left}{n1}{
+    Cuando $h \rightarrow 0$, las trayectorias $-DA$ y $BC$ coinciden.
+}
+
+Donde $\vect{E} \cdot \ds{\vect{\ell}}$ es la componente de $\vect{E}$
+que es tangencial a la distribución superficial de carga. Además, como
+$\nabla \times \vect{E} = 0$ (ver ecuación \eqref{eq:rotacional_E}),
+entonces:
+\begin{equation}
+    \int_S \left( \nabla \times \vect{E} \right) \ds{s}^2 = 0
+    = \int_B^C
+      \Bigl( \vect{E}_{1\parallel} - \vect{E}_{2\parallel} \Bigr) \ds{\ell}
+    \implies
+    \vect{E}_{1\parallel} - \vect{E}_{1\parallel} = 0
+    \implies
+    \vect{E}_{1\parallel} = \vect{E}_{1\parallel}
+\end{equation}
+
+En conclusión, al atravesar una distribución superficial de carga, $\vect{E}$
+cambia en su componente perpendicular a la misma, pero no en la perpendicular:
+\begin{equation}
+\begin{aligned}
+    &\vect{E}_{1\parallel} = \vect{E}_{2\parallel}
+    \qquad\qquad
+    &\vect{E}_{1\perp} = \vect{E}_{1\perp} + 4\pi \sigma
+\end{aligned}
+\end{equation}
